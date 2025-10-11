@@ -18,11 +18,9 @@ def run(sl):
                 fname = function.name
                 if fname not in msg_sender_funcs:
                     msg_sender_funcs.append(fname)
-    print(f'MsgSender funcs : {msg_sender_funcs}\n', )
+    # print(f'MsgSender funcs : {msg_sender_funcs}\n', )
 
     mint_funcs = []
-    burn_funcs = []
-
 
     for contract in sl.contracts:
         if  not(contract.is_library) and not(contract.is_interface) and len(contract.derived_contracts)==0:
@@ -49,7 +47,6 @@ def run(sl):
         if func.contract_declarer.is_interface:
             continue
 
-        print(func.canonical_name)
 
         msg_sender_checks = []
         condt_nodes = []
@@ -61,12 +58,10 @@ def run(sl):
             msg_sender_checks.extend(get_msg_sender_checks(fobj, msg_sender_funcs))
             condt_nodes.extend(get_all_conditional_nodes(fobj))
             modifiers.extend([i.name for i in fobj.modifiers])
-        print(f'modifiers : {modifiers}')
 
         print(msg_sender_checks)
 
         if len(msg_sender_checks)>0  : 
-            print('len(msg_sender_checks)>0 ', len(msg_sender_checks)>0 )
             blacklist_checks = [i for i in msg_sender_checks if (('!' in i)and('require' in i))]
             # print(len(blacklist_checks), len(msg_sender_checks))
             if len(blacklist_checks) == len(msg_sender_checks):
@@ -75,7 +70,7 @@ def run(sl):
             # else:
             # print("✅ Proper Access Control Checking Done")
             
-            print('condt_nodes : ', condt_nodes)
+            # print('condt_nodes : ', condt_nodes)
             unbounded_mint = True
             if any(['SUPPLY' in i.upper() or 'CAP' in i.upper() for i in condt_nodes]): #totalSupply() / cap() [ERC20 Capped]
                 unbounded_mint = False
@@ -90,7 +85,7 @@ def run(sl):
 
         else:
             print("❌ High Risk: No Access Control Checks")
-            print(condt_nodes)
+            # print(condt_nodes)
             # check for economic gate in PUBLIC MINT
             economic_gate = False
             if(
@@ -105,11 +100,6 @@ def run(sl):
                 print('❌ High Risk: No Economic Gate in public Mint in ',func.canonical_name)
                 result['public_mint_without_economic_gate'].append(func.canonical_name)
 
-        
-        # # check for ERC4626
-        # if ('ERC4626' in func.contract_declarer.name) and len(func.overridden_by)==0:
-        #     # function declared public in EC4626 which calls mint , must be overriden
-        #     print("❌ High Risk: ERC4626 Not Overriden and is Exposed")
 
         print()
     return result
