@@ -12,7 +12,7 @@ MINT_CODES = {
 MINT_LABELS = {
     "ACM-001": "Unbounded admin mint ",
     "ACM-002": "Public mint without economic gate ",
-    "ACM-101": "Weak access control",
+    "ACM-101": "Weak validation",
 }
 
 # Severities per category

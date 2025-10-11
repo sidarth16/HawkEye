@@ -19,10 +19,10 @@ ADMIN_FUNC_KEYWORDS = {
 }
 
 CODE_LABELS = {
-    "AC-001": "Unvalidated Admin/Governance Update",
-    "AC-002": "Unvalidated Upgrade/Init",
-    "AC-003": "Unvalidated Callback/Flashloan entrypoint",
-    "AC-101": "Weak access control",
+    "AC-001": "Unrestricted Admin/Governance Update",
+    "AC-002": "Unrestricted Upgrade/Init",
+    "AC-003": "Unrestricted Flashloan/Callback entrypoint",
+    "AC-101": "Weak validation",
 }
 
 

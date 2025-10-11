@@ -9,8 +9,8 @@ KIND_CODE = {
     "delegatecall":   "IVC-001",
     "callcode":       "IVC-002",
     "low_level_call": "IVC-003",
-    "staticcall":     "IVC-004",
-    "external_call":  "IVC-005",
+    "external_call":  "IVC-004",
+    "staticcall":     "IVC-005",
 }
 
 KIND_CATEGORY = {
@@ -67,7 +67,6 @@ def _format_info(info: Dict[str, List[List[Any]]]) -> Dict[str, Any]:
             "total_calls": sum(v["call_count"] for v in variables_out),
         })
 
-    # print("functions_out : ", functions_out)
     return {
         "functions": functions_out,
         "totals": {"functions": len(functions_out), "variables": total_vars, "calls": total_calls}
@@ -173,14 +172,10 @@ def build_detector_response(chain: str, address: str, info: Dict[str, List[List[
 
 
     totals = formatted["totals"]
-    print(issues)
-    print(len(issues))
     summary = (
         f"{len(issues)} input-validation issue(s) across "
         f"{totals['functions']} function(s), {totals['calls']} external call site(s)."
     )
-    print(summary)
-
     return {
         "chain": chain,
         "address": address,
