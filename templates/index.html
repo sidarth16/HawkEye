@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Detector — Security Scanner</title>
+    <title>0xDetector — Security Scanner</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -486,6 +487,7 @@
 .hero-card h1{
   letter-spacing: -0.02em;
   text-shadow: 0 2px 26px rgba(124,91,255,0.22);
+  color: #EAF6FF;
 }
 
 /* ==================== Inputs: crisp glass with focus halo ==================== */
@@ -661,7 +663,7 @@
 
 /* Title */
 .hero-card h1 {
-  font-family: "Poppins", Inter, system-ui, sans-serif;
+  font-family: "Space Grotesk", "Poppins", Inter, system-ui, sans-serif;
   font-weight: 800;
   font-size: clamp(28px, 4vw, 40px);
   letter-spacing: 0.2px;
@@ -673,6 +675,7 @@
   color: transparent;
   text-shadow: 0 1px 0 rgba(0,0,0,0.25);
   margin-bottom: 4px;
+  color: #EAF6FF;
 }
 
 /* Subtitle (the immediate paragraph under title) */
@@ -784,6 +787,98 @@
   scrollbar-color: rgba(124,91,255,0.4) rgba(255,255,255,0.05);
 }
 
+/* ===== Issue Details content box only ===== */
+.details-body-box {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-top: 8px;
+  color: #D8E8FF;
+  font-size: 13px;
+  line-height: 1.45;
+  font-family: "Inter", system-ui, sans-serif;
+  box-shadow:
+    0 4px 12px rgba(6,10,20,0.4) inset,
+    0 0 24px rgba(124,91,255,0.06);
+  backdrop-filter: blur(8px) saturate(120%);
+  transition: all 0.25s ease;
+}
+
+/* Hover effect — slightly highlight */
+.details-body-box:hover {
+  border-color: rgba(138,91,255,0.25);
+  box-shadow:
+    0 8px 24px rgba(10,20,40,0.5) inset,
+    0 0 24px rgba(138,91,255,0.08);
+  filter: brightness(1.04);
+}
+
+/* ===== App-wide aurora background like the slide ===== */
+html, body { height: 100%; }
+body {
+  position: relative;
+  background-color: #060614;            /* deep base */
+  /* keep your font smoothing + text color as-is */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #EAF6FF;
+}
+
+/* Paint the blobs & dark fade */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -10%;
+  z-index: -2;
+  background:
+    /* left/bottom maroon → burgundy glow
+    radial-gradient(50% 40% at 5% 60%, rgba(120, 10, 50, 0.70) 0%, rgba(120, 10, 50, 0.28) 35%, transparent 80%), */
+    /* top-right violet/magenta glow */
+    radial-gradient(65% 70% at 82% 8%, rgba(140, 70, 255, 0.55) 0%, rgba(140, 70, 255, 0.28) 38%, transparent 68%),
+    /* bottom-right coral glow
+    radial-gradient(60% 40% at 92% 92%, rgba(255, 100, 80, 0.35) 0%, rgba(255, 100, 80, 0.22) 35%, transparent 70%), */
+    /* bottim-left violet/magenta glow */
+    radial-gradient(60% 40% at 8% 89%,  rgba(140, 70, 255, 0.28) 8%, transparent 99%),
+    /* base vertical fade */
+    linear-gradient(180deg, #0a0a18 0%, #070716 40%, #050513 100%);
+  background-attachment: fixed;         /* subtle parallax feel */
+  filter: saturate(105%) contrast(105%);
+}
+
+/* Vignette + ultra subtle grain */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -10%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    /* vignette */
+    radial-gradient(140% 120% at 50% 60%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.28) 100%),
+    /* grain (cheap procedural) */
+    repeating-conic-gradient(from 0deg,
+      rgba(255,255,255,0.018) 0deg 2deg,
+      rgba(0,0,0,0.0) 2deg 4deg);
+  mix-blend-mode: overlay;
+  opacity: .9;
+}
+
+/* Respect reduced motion / simpler paint if needed */
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after { background-attachment: initial; }
+}
+.app-title{
+  font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 4.2vw, 46px);
+  letter-spacing: .5px;
+  background: linear-gradient(180deg,#FFF 0%,#DDF3FF 55%,#A6C9FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 40px rgba(124,91,255,.25);
+}
 
 
     </style>
@@ -795,7 +890,7 @@
       <div class="glass hero-card p-6 rounded-xl2 relative overflow-hidden">
   <div class="flex items-start justify-between">
     <div class="w-full">
-      <h1 style="font-family: 'Poppins', Inter, sans-serif;" class="text-3xl font-extrabold tracking-tight">Detector — Security Scanner</h1>
+      <h1 style="font-family: 'Poppins', Inter, sans-serif;" class="app-title text-3xl font-extrabold tracking-tight">0xDetector — Security Scanner</h1>
       <p class="text-slate-300 mt-1 ">Detect Access Control, Input Validation & Missing Override issues</p>
       <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
         <label class="block text-sm text-slate-300">
@@ -902,7 +997,8 @@
       </details>
 
       <footer class="text-center text-xs text-slate-500 mt-6 pt-4 border-t border-slate-700/40">
-        <span class="text-accent">© 2025 Detector UI</span> — built for security analysis
+        <span class="text-accent">© 2025 0xDetector</span> — built for security analysis<br/>
+        <span class="text-accent"><a href="https://linktr.ee/sidarthx0">linktr.ee/sidarthx0</a></span>
       </footer>
     </div>
 

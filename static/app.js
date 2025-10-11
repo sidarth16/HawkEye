@@ -96,8 +96,8 @@ function suggestedFixForCode(code) {
     'IVC-001': "Add proper input valdation checks to the exposed user-controlled call target address, before making delegateCall to it.",
     'IVC-002': "Add proper input valdation checks to the exposed user-controlled call target address, before using callcode on it.",
     'IVC-003': "Add proper input valdation checks to the exposed user-controlled call target address, before making low_level_call to it.",
-    'IVC-004': "Add proper input valdation checks to the exposed user-controlled call target address, before making staticCall to it.",
-    'IVC-005': "Add proper input valdation checks to the exposed user-controlled call target address, before making externalCall to it.",
+    'IVC-004': "Add proper input valdation checks to the exposed user-controlled call target address, before making externalCall to it.",
+    'IVC-005': "Add proper input valdation checks to the exposed user-controlled call target address, before making staticCall to it.",
 
     'ACM-101': "Avoid using `tx.origin` or trivial blaclisting like checks (`!=`) and use strong user validations. ",
     'ACM-001': "Add strong user-validation checks and proper access control bounds. Try Adding `onlyOwner` or proper role based checks to this function.",
@@ -161,9 +161,11 @@ function renderIssue(i, idx) {
           </div>
 
           <details class="mt-2 text-sm text-slate-300">
-            <summary class="cursor-pointer">Details</summary>
-            <div class="mt-2 whitespace-pre-wrap">${escapeHtml(desc)}</div>
-          </details>
+  <summary class="cursor-pointer text-slate-200 font-semibold">Details</summary>
+  <div class="details-body-box mt-2">
+    <div class="whitespace-pre-wrap">${escapeHtml(desc)}</div>
+  </div>
+</details>
         </div>
       </div>
     </div>
@@ -192,7 +194,7 @@ function renderSelectedIssueInlineByIndex(idx) {
         <div class="flex items-center justify-between">
           <div>
             <div class="font-semibold">${titleHtml}</div>
-            <div class="text-xs text-slate-400">${escapeHtml(i.Category || i.category || '—')} • ${escapeHtml(i.Type || i.type || '—')}</div>
+            <div class="text-xs text-slate-400">${escapeHtml(i.Type || i.type || '—')} | ${escapeHtml(i.Category || i.category || '—')} </div>
           </div>
           <div class="text-sm">
             <div class="chip ${severityClass(i.Severity || i.severity || 'LOW')}">${escapeHtml(i.Severity || i.severity || 'LOW')}</div>
