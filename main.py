@@ -8,7 +8,7 @@ import uvicorn
 
 from slither.slither import Slither
 
-import input_validation, AC_admin_funcs, AC_mint, check_missing_override
+import IVC, AC, ACM, MCO
 from IVC_response import build_detector_response
 from AC_response import build_access_control_response
 from ACM_response import build_mint_access_response
@@ -23,10 +23,8 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 def detect_vulns(chain: str, address: str) -> dict:
-    # Example response shape — change to your detector's output
-    # This function should perform the heavy lifting of analyzing the contract
 
-    print("detect")
+    print("detecting Vulns")
     prefix=''
     if chain=="arbitrum": prefix = 'arbi:'
     if chain=="base": prefix = 'base:'
@@ -37,33 +35,12 @@ def detect_vulns(chain: str, address: str) -> dict:
     except Exception as e :
         print(e)
         raise(e)
-    # sl = Slither('test-contracts/VulnerableMerkleTest.sol')
-    # sl = Slither('test-contracts/hidden_mint_20.sol')
-    print("slither done")
 
+    info_IV = IVC.run(sl)
+    info_AC = AC.run(sl)
+    info_ACM = ACM.run(sl)
+    info_MCO = MCO.run(sl)
 
-    info_IV = input_validation.run(sl)
-    info_AC = AC_admin_funcs.run(sl)
-    info_ACM = AC_mint.run(sl)
-    info_MCO = check_missing_override.run(sl)
-
-    # print(info_IV)
-
-    # return {
-    #     "chain": chain,
-    #     "address": address,
-    #     "issues_found": [
-    #         {
-    #             "id": "IV-001",
-    #             "title": "Missing input validation on transfer",
-    #             "severity": "HIGH",
-    #             "description": "transfer() does not validate recipient address",
-    #             "info":result
-    #         }
-    #     ],
-    #     "summary": "1 potential input validation issue",
-    #     # "result": result
-    # }
     return {"info_AC": info_AC, "info_IV": info_IV, "info_ACM": info_ACM, "info_MCO" : info_MCO}
 
 
@@ -83,12 +60,7 @@ async def api_scan(req: ScanRequest):
     chain = req.chain.strip()
     address = req.address.strip()
 
-    # call your detector
-
-    # try:
-    #     result = detect_vulns(chain, address)
-    # except Exception as e:
-    #     return JSONResponse(status_code=500, content={"error": str(e)})
+    # call detector
     
     try:
         raw = detect_vulns(chain, address)
@@ -109,7 +81,6 @@ async def api_scan(req: ScanRequest):
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
 
-    # return JSONResponse(content=result)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
