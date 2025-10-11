@@ -14,17 +14,17 @@ Identify critical vulnerabilities in smart contracts related to input validation
 | **IVC-003** | Input Validation | Low-level `call` without proper input validation | 🔴 High |
 | **IVC-004** | Input Validation | `externalCall` without proper input validation | 🔴 High |
 | **IVC-005** | Input Validation | `staticcall` without proper input validation | 🟡 Low |
-| **AC-001** | Access Control | Unrestricted Admin/Governance Update | 🔴 High |
-| **AC-002** | Access Control | Unrestricted Upgrade/Init | 🔴 High |
-| **AC-003** | Access Control | Unrestricted Flashloan/Callback Entrypoint | 🔴 High |
-| **AC-101** | Access Control | Weak Validation | 🟠 Medium |
-| **ACM-001** | Access Control Mint | Unbounded Admin Mint | 🔴 High |
-| **ACM-002** | Access Control Mint | Public Mint Without Economic Gate | 🔴 High |
-| **ACM-101** | Access Control Mint | Weak Validation | 🟠 Medium |
-| **MCO-001** | Missing Critical Override | Vault Core not overridden | 🔴 High |
-| **MCO-002** | Missing Critical Override | Token Core not overridden | 🔴 High |
-| **MCO-003** | Missing Critical Override | Upgrade Core not overridden | 🔴 High |
-| **MCO-004** | Missing Critical Override | Access Role Core not overridden | 🟡 Medium |
+| **AC-001** | Access Control | Unrestricted `Admin/Governance` Update | 🔴 High |
+| **AC-002** | Access Control | Unrestricted `Upgrade/Init` | 🔴 High |
+| **AC-003** | Access Control | Unrestricted `Flashloan/Callback` Entrypoint | 🔴 High |
+| **AC-101** | Access Control | `Weak` Validation | 🟠 Medium |
+| **ACM-001** | Access Control Mint | Unbounded `Admin Mint` | 🔴 High |
+| **ACM-002** | Access Control Mint | `Public Mint` Without Economic Gate | 🔴 High |
+| **ACM-101** | Access Control Mint | `Weak` Validation | 🟠 Medium |
+| **MCO-001** | Missing Critical Override |` Vault Core` not overridden | 🔴 High |
+| **MCO-002** | Missing Critical Override | `Token Core` not overridden | 🔴 High |
+| **MCO-003** | Missing Critical Override |` Upgrade Core` not overridden | 🔴 High |
+| **MCO-004** | Missing Critical Override | `Access Role Core` not overridden | 🟡 Medium |
 
 
 ## How to use :
@@ -133,24 +133,24 @@ Unmodified inherited logic can lead to:
 ---
 <br/>
 
-# Real Defi Attacks to Check in Detector : 
+# Real Defi Attacks that would have been prevented  : 
+- Li.Fi Hack
+    - ETH : 0xf28A352377663cA134bd27B582b1a9A4dad7e534
+
+- Arcadia Finance
+    - Base : 0xC729213B9b72694F202FeB9cf40FE8ba5F5A4509
+
 - SuperRare
     - ETH : 0xfFB512B9176D527C5D32189c3e310Ed4aB2Bb9eC
 
 - MoonHacker
     - optimism : 0xD9B45e2c389b6Ad55dD3631AbC1de6F2D2229847
 
-- Arcadia Finance
-    - Base : 0xC729213B9b72694F202FeB9cf40FE8ba5F5A4509
-
-- Li.Fi Hack
-    - ETH : 0xf28A352377663cA134bd27B582b1a9A4dad7e534
+- Silo: 
+    - ETH : 0xCbEe4617ABF667830fe3ee7DC8d6f46380829DF9
 
 - MetaPool
     - ETH : 0x3747484567119592fF6841df399cf679955A111A
-
-- Silo: 
-    - ETH : 0xCbEe4617ABF667830fe3ee7DC8d6f46380829DF9
 
 
 
