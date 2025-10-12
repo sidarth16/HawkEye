@@ -5,26 +5,26 @@ Identify critical vulnerabilities in smart contracts related to input validation
 
 ---
 
-# 🧩 Detector Modules Summary
+# 🧩 Detector Modules
 
 | **Module Code** | **Type** | **Description** | **Severity** |
 |------------------|------------------|------------------|---------------|
-| **IVC-001** | Input Validation | `delegateCall` without proper input validation | 🔴 High |
-| **IVC-002** | Input Validation | `callcode` without proper input validation | 🔴 High |
-| **IVC-003** | Input Validation | Low-level `call` without proper input validation | 🔴 High |
-| **IVC-004** | Input Validation | `externalCall` without proper input validation | 🔴 High |
-| **IVC-005** | Input Validation | `staticcall` without proper input validation | 🟡 Low |
-| **AC-001** | Access Control | Unrestricted `Admin/Governance` Update | 🔴 High |
-| **AC-002** | Access Control | Unrestricted `Upgrade/Init` | 🔴 High |
-| **AC-003** | Access Control | Unrestricted `Flashloan/Callback` Entrypoint | 🔴 High |
-| **AC-101** | Access Control | `Weak` Validation | 🟠 Medium |
-| **ACM-001** | Access Control Mint | Unbounded `Admin Mint` | 🔴 High |
-| **ACM-002** | Access Control Mint | `Public Mint` Without Economic Gate | 🔴 High |
-| **ACM-101** | Access Control Mint | `Weak` Validation | 🟠 Medium |
-| **MCO-001** | Missing Critical Override |` Vault Core` not overridden | 🔴 High |
-| **MCO-002** | Missing Critical Override | `Token Core` not overridden | 🔴 High |
-| **MCO-003** | Missing Critical Override |` Upgrade Core` not overridden | 🔴 High |
-| **MCO-004** | Missing Critical Override | `Access Role Core` not overridden | 🟡 Medium |
+| **IVC-001** | Input Validation on Calls | `delegateCall` without proper input validation | 🔴 High |
+| **IVC-002** | Input Validation on Calls  | `callcode` without proper input validation | 🔴 High |
+| **IVC-003** | Input Validation on Calls  | Low-level `call` without proper input validation | 🔴 High |
+| **IVC-004** | Input Validation on Calls  | `externalCall` without proper input validation | 🔴 High |
+| **IVC-005** | Input Validation on Calls  | `staticcall` without proper input validation | 🟡 Low |
+| **AC-001** | Access Control | Unrestricted Admin/Governance Update | 🔴 High |
+| **AC-002** | Access Control | Unrestricted Upgrade/Init | 🔴 High |
+| **AC-003** | Access Control | Unrestricted Flashloan/Callback Entrypoint | 🔴 High |
+| **AC-101** | Access Control | Weak Validation | 🟠 Medium |
+| **ACM-001** | Access Control Mint | Unbounded Admin Mint | 🔴 High |
+| **ACM-002** | Access Control Mint | Public Mint Without Economic Gate | 🔴 High |
+| **ACM-101** | Access Control Mint | Weak Validation | 🟠 Medium |
+| **MCO-001** | Missing Critical Override | Vault Core not overridden | 🔴 High |
+| **MCO-002** | Missing Critical Override | Token Core not overridden | 🔴 High |
+| **MCO-003** | Missing Critical Override | Upgrade Core not overridden | 🔴 High |
+| **MCO-004** | Missing Critical Override | Access Role Core not overridden | 🟡 Medium |
 
 
 ## How to use :
@@ -50,6 +50,10 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
+**5. Open in Browser** <br/>
+- Visit your local instance at:<br/>
+ [localhost:8000](http://localhost:8000)
+
 ---
 
 
