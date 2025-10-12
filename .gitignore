@@ -1,0 +1,102 @@
+# -------------------------
+# Python & FastAPI .gitignore
+# -------------------------
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+venv*
+env/
+.venv/
+ENV/
+env.bak/
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# FastAPI / Uvicorn
+*.db
+*.sqlite3
+logs/
+*.log
+*.pid
+
+# mypy / type checker
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pydantic models cache
+__pydantic_cache__/
+
+# Pyre type checker
+.pyre/
+
+# IDE / Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebooks (if used)
+.ipynb_checkpoints
+
+# Local configuration
+.env
+.env.*
+*.local
+*.ini
+*.cfg
+
+# Misc
+*.bak
+*.tmp
+crytic-export
