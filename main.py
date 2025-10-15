@@ -8,13 +8,13 @@ import uvicorn
 
 from slither.slither import Slither
 
-import IVC, AC, ACM, MCO
-from IVC_response import build_detector_response
-from AC_response import build_access_control_response
-from ACM_response import build_mint_access_response
-from MCO_response import build_override_response
+from src.detectors import IVC, AC, ACM, MCO
+from src.response.IVC_response import build_detector_response
+from src.response.AC_response import build_access_control_response
+from src.response.ACM_response import build_mint_access_response
+from src.response.MCO_response import build_override_response
 
-from merge_response import merge_scan_responses
+from src.response.merge_response import merge_scan_responses
 
 app = FastAPI()
 
