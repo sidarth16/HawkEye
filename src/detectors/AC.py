@@ -9,9 +9,9 @@ ADMIN_FUNC_KEYWORDS = {
     'config' : ['update', 'set', 'remove'],
     'router' : ['update', 'set', 'remove'],
     'oracle' : ['update', 'set', 'remove'],
-    'owner' : ['set', 'update', 'transfer', 'remove', 'renounce'],
-    'admin' : ['set', 'update', 'transfer', 'remove', 'renounce'],
-    'role' : ['set', 'update', 'remove', 'renounce'],
+    'owner' : ['set', 'update', 'transfer', 'remove', 'revoke', 'renounce'],
+    'admin' : ['set', 'update', 'transfer', 'remove', 'revoke', 'renounce'],
+    'role' : ['set', 'update', 'remove', 'revoke', 'renounce'],
 
 
     # AC-002: Unvalidated access to Upgrade/init functions (callable by anyone)
@@ -56,7 +56,7 @@ def run(sl:Slither):
     #function trace 
     ftrace = get_function_trace(sl)
 
-    # get all funcs returning msg.sender [ to capture _msgSender like funcs () -> reducing FN ]
+    # get all funcs returning msg.sender [ to capture _msgSender like funcs () -> reducing False Positive ]
     msg_sender_funcs = get_all_msg_sender_funcs(sl)
     # print('MsgSender funcs : ', msg_sender_funcs)
 

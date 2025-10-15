@@ -74,9 +74,44 @@ def check_input_validation(function:Function, farg_vars=None):
         farg_vars = function.parameters
     # print(f'Func parameters : ', [i.name for i in farg_vars])
 
+    # get all local vars from list of all variables used.
+    vars = [var for var in function.variables if not(var.is_constant or var.is_immutable or var.is_storage or var in function.parameters) and var.name]
+    # print('local_vars : ', [i.name for i in vars])
+
+    # get derivation of these local vars:
+    tainted_vars = [] # vars that are derived from user inputs
+    tainted_derivations = [i.name for i in farg_vars] + ['msg.sender', 'msg.data', 'tx.origin', 'msg.value']
+    for node in function.nodes:
+        for ir in node.irs:
+            lval, rval = None, None
+            if (
+                isinstance(ir, Assignment)
+                # and ir.lvalue.type == ElementaryType("address")
+                and hasattr(ir.lvalue, "name")
+                and hasattr(ir.rvalue, "name")
+                ):
+                lval, rval = ir.lvalue.name, ir.rvalue.name
+
+            elif (isinstance(ir, Unpack)):
+                lval =  ir.expression.source_mapping.content.split('=')[0].strip()
+                rval =  ir.expression.source_mapping.content.split('=')[-1].strip()
+
+            if lval and rval : 
+                # print(f'lval, rval : {lval, rval}')
+                for var in vars:
+                    if var.name in lval :
+                        if any([i in rval for i in tainted_derivations]):
+                            tainted_vars.append(var)
+
+
+    # print('tainted_vars : ', [i.name for i in tainted_vars])
+    vars_to_check = list(set(tainted_vars)) + farg_vars
+    all_vars_to_check.extend(vars_to_check)
+    # print('checking_vars : ', [i.name for i in all_vars_to_check])
+
+
     # get funcs that are make external calls
     ext_calls = function.external_calls_as_expressions
-
     if len(ext_calls)>0:
 
         # clean calls content
@@ -86,7 +121,7 @@ def check_input_validation(function:Function, farg_vars=None):
         ext_contract_vars = []
         for call in ext_calls:
 
-            # TODO : Currently skipping funcs like `rescue`/`redeem` which sends eth to arbitrary recipient address
+            # TODO : Currently skipping funcs like `rescue`/`redeem` which sends eth to arbitrary recipient address (reducing FPs)
             if (('.send' in call or '.sendValue(' in call) and any([i in fname for i in ['withdraw', 'redeem']])) or ('rescue' in fname):
                 continue
 
@@ -101,45 +136,9 @@ def check_input_validation(function:Function, farg_vars=None):
         # print(f'ext_contract_vars: {ext_contract_vars}')
 
 
-        # get all local vars from list of all variables used.
-        vars = [var for var in function.variables if not(var.is_constant or var.is_immutable or var.is_storage or var in function.parameters) and var.name]
-        # print('local_vars : ', [i.name for i in vars])
-
-        # get derivation of these local vars:
-        tainted_vars = [] # vars that are derived from user inputs
-        tainted_derivations = [i.name for i in farg_vars] + ['msg.sender', 'msg.data', 'tx.origin', 'msg.value']
-        for node in function.nodes:
-            for ir in node.irs:
-                lval, rval = None, None
-                if (
-                    isinstance(ir, Assignment)
-                    # and ir.lvalue.type == ElementaryType("address")
-                    and hasattr(ir.lvalue, "name")
-                    and hasattr(ir.rvalue, "name")
-                    ):
-                    lval, rval = ir.lvalue.name, ir.rvalue.name
-
-                elif (isinstance(ir, Unpack)):
-                    lval =  ir.expression.source_mapping.content.split('=')[0].strip()
-                    rval =  ir.expression.source_mapping.content.split('=')[-1].strip()
-
-                if lval and rval : 
-                    # print(f'lval, rval : {lval, rval}')
-                    for var in vars:
-                        if var.name in lval :
-                            if any([i in rval for i in tainted_derivations]):
-                                tainted_vars.append(var)
-
-
-        print('tainted_vars : ', [i.name for i in tainted_vars])
-        vars_to_check = list(set(tainted_vars)) + farg_vars
-        all_vars_to_check.extend(vars_to_check)
-        # print('checking_vars : ', [i.name for i in tainted_vars])
-
-
         # get vars_to_check that are used for extrernal call contract
         vars_to_check = list(set([var for var in vars_to_check if any([var.name in i for i in ext_contract_vars]) and len(var.name)>0]))
-        print('tainted and input vars_to_check : ', [i.name for i in vars_to_check])
+        # print('tainted and input vars_to_check : ', [i.name for i in vars_to_check])
 
 
         # check if tainted variables are used in conditional statements
@@ -212,19 +211,17 @@ def run(sl):
             for function in contract.functions :
                 if 'slitherConstructorConstantVariables' in function.name or 'slitherConstructorVariables' in function.name or function.is_constructor :
                     continue
-                if function.visibility not in ['public', 'external'] or function.view :
+                if function.visibility not in ['public', 'external']  or function.view :
                     continue
 
                 vars_to_check, unvalidated_var_ext_call = check_input_validation(function)
-                # print('✨',unvalidated_var_ext_call)
+                # print('✨',unvalidated_var_ext_call, vars_to_check)
                 result = update_result(function.canonical_name, unvalidated_var_ext_call, result)
 
                 # Check for tainted vars/args being passed to internal function
                 if vars_to_check:
                     print(f'vars_to_check({function.canonical_name}) : {[i.name for i in vars_to_check]}')
                     for func, args_passed in ftrace[function.canonical_name]:
-                        
-                        
                         
                         # handles var renamed while passing to internal_function
                         # 'swapData' passed is used '_swap' in another func => then, check for '_swap' 
