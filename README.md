@@ -1,7 +1,6 @@
 # HawkEye - Smart Contract Security Scanner
 
-Identify critical vulnerabilities in smart contracts related to input validation, access control, minting permissions, and missing critical overrides.  
-
+> Identify critical vulnerabilities in smart contracts related to input validation, access control, minting permissions, and missing critical overrides.  
 
 ---
 
@@ -57,9 +56,7 @@ python main.py
 
 ---
 
-
 **Note:** On the first run, scanning a contract may take some time as the required Solidity compilers (solc versions) are installed to parse the source code.
-
 
 
 ## Module Summaries
