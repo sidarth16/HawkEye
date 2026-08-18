@@ -4,7 +4,9 @@ from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
+import os
 import uvicorn
+from dotenv import load_dotenv
 
 from slither.slither import Slither
 
@@ -17,6 +19,8 @@ from src.response.MCO_response import build_override_response
 from src.response.merge_response import merge_scan_responses
 
 app = FastAPI()
+load_dotenv()
+ETHERSCAN_API_KEY = os.getenv("ETHERSCAN_API_KEY")
 
 # serve static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -31,7 +35,7 @@ def detect_vulns(chain: str, address: str) -> dict:
     if chain=='optimism': prefix = 'optim:'
 
     try:
-        sl = Slither(prefix+address, etherscan_api_key="BK15VKTGEUVYXYXVRQ5H93HWUITNF6ZK8C")
+        sl = Slither(prefix + address, etherscan_api_key=ETHERSCAN_API_KEY)
     except Exception as e :
         print(e)
         raise(e)

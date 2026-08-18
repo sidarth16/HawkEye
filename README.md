@@ -48,6 +48,7 @@ pip install -r requirements.txt
 
 **4. Run the Detector Dapp**
 ```bash
+cp .env.example .env
 python main.py
 ```
 **5. Open in Browser** <br/>
@@ -155,6 +156,4 @@ Unmodified inherited logic can lead to:
 
 - MetaPool
     - ETH : 0x3747484567119592fF6841df399cf679955A111A
-
-
 

@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+
 from slither.slither import Slither
 
 from src.detectors import IVC, AC, ACM, MCO
@@ -12,6 +15,9 @@ from src.response.merge_response import merge_scan_responses
 from collections import OrderedDict
 from IPython.display import display, Markdown
 
+load_dotenv()
+ETHERSCAN_API_KEY = os.getenv("ETHERSCAN_API_KEY")
+
 
 
 def detect_vulns(chain: str, address: str) -> dict:
@@ -22,7 +28,7 @@ def detect_vulns(chain: str, address: str) -> dict:
     if chain=='optimism': prefix = 'optim:'
 
     try:
-        sl = Slither(prefix+address, etherscan_api_key="BK15VKTGEUVYXYXVRQ5H93HWUITNF6ZK8C")
+        sl = Slither(prefix + address, etherscan_api_key=ETHERSCAN_API_KEY)
     except Exception as e :
         print(e)
         raise(e)
