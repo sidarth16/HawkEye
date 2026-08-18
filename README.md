@@ -1,11 +1,11 @@
-# 🛡️ 0xDetector - Smart Contract Security Scanner
+# HawkEye - Smart Contract Security Scanner
 
 Identify critical vulnerabilities in smart contracts related to input validation, access control, minting permissions, and missing critical overrides.  
 
 
 ---
 
-# 🧩 Detector Modules
+# Detector Modules
 
 | **Module Code** | **Type** | **Description** | **Severity** |
 |------------------|------------------|------------------|---------------|
@@ -61,7 +61,7 @@ python main.py
 
 
 
-## ⚙️ Module Summaries
+## Module Summaries
 
 ### **1. Input Validation Call Module (IVC)**
 
